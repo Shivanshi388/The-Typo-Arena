@@ -25,6 +25,12 @@ export const createRoom = (playerName) =>
     body: JSON.stringify({ playerName }),
   });
 
+export const joinRoom = (roomCode, playerName) =>
+  request(`/rooms/${roomCode}/join`, {
+    method: "POST",
+    body: JSON.stringify({ playerName }),
+  });
+
 export const getRoom = (roomCode) =>
   request(`/rooms/${roomCode}`);
 
@@ -36,6 +42,7 @@ export const getUser = (userId) =>
 
 export default {
   createRoom,
+  joinRoom,
   getRoom,
   getLeaderboard,
   getUser,

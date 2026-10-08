@@ -6,6 +6,8 @@ import { Server } from "socket.io";
 
 import { connectDatabase } from "./config/database.js";
 import roomRoutes from "./routes/roomRoutes.js";
+import leaderboardRoutes from "./routes/leaderboardRoutes.js";
+import { setupSocketManager } from "./sockets/socketManager.js";
 
 dotenv.config();
 
@@ -44,14 +46,9 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/rooms", roomRoutes);
+app.use("/api/leaderboard", leaderboardRoutes);
 
-io.on("connection", (socket) => {
-  console.log(`Socket connected: ${socket.id}`);
-
-  socket.on("disconnect", () => {
-    console.log(`Socket disconnected: ${socket.id}`);
-  });
-});
+setupSocketManager(io);
 
 async function startServer() {
   try {
